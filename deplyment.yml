@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: readiness
+  labels:
+    app: readiness
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: readiness
+  template:
+    metadata:
+      labels:
+        app: readiness
+    spec:
+      containers:
+      - image: readiness:v4
+        imagePullPolicy: Never
+        name: readiness
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 3
+          periodSeconds: 3
+          timeoutSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+          initialDelaySeconds: 3
+          periodSeconds: 3
+          timeoutSeconds: 1
