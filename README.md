@@ -1,7 +1,5 @@
 # Kubernetes liveness/readiness probes playground
 
-## Quickstart
-
 ```
 eval $(minikube docker-env)
 make VERSION=v4
